@@ -1,0 +1,8 @@
+{
+  "name": "modi-backend-typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:caffeine-driven-developers/modi-backend-typescript.git",
+  "author": "Dong-jin Ahn <adoji92@gmail.com>",
+  "license": "MIT"
+}
