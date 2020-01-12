@@ -8,7 +8,7 @@
 ## 루트 디렉토리 파일 설명
 
 - `ormconfig.json`: typeorm 설정 파일
-- `pretterrc`: prettier 설정 파일
+- `.pretterrc`: prettier 설정 파일
 - `nodemon.json`: nodemon 설정 파일
 - `tsconfig.json`: typescript 설정 파일
 - `.eslintrc.js`: eslint 설정 파일 (tslint 대신 eslint/typescript 사용함)
