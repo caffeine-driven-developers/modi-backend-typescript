@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import dotenv from 'dotenv';
+import cors from '@koa/cors';
 
 import search from './search';
 
@@ -11,8 +12,15 @@ const router = new Router();
 
 router.use('/search', search.routes());
 
-app.use(router.routes()).use(router.allowedMethods());
+app
+  .use(
+    cors({
+      origin: '*',
+    }),
+  )
+  .use(router.routes())
+  .use(router.allowedMethods());
 
-app.listen(3000, () => {
-  console.log('listening on port 3000');
+app.listen(3001, () => {
+  console.log('listening on port 3001');
 });
