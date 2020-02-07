@@ -2,9 +2,9 @@ import { searchOmdbById, searchOmdbByTitle } from './omdb';
 import Router from 'koa-router';
 import __ from 'lodash';
 
-const search = new Router();
+const searchRouter = new Router();
 
-search.get('/', async (ctx, next) => {
+searchRouter.get('/', async (ctx, next) => {
   const { i: id, s: title } = ctx.request.query;
   if (__.isNil(id) && __.isNil(title)) {
     ctx.response.status = 400; // Not Acceptable
@@ -30,4 +30,4 @@ search.get('/', async (ctx, next) => {
   }
 });
 
-export default search;
+export default searchRouter;

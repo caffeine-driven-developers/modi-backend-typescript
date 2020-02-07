@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import cors from '@koa/cors';
 
 import search from './search';
+import movieList from './movie_list';
+import { createConnection } from 'typeorm';
 
 dotenv.config(); // Load env variables from .env file
 
@@ -11,6 +13,7 @@ const app = new Koa();
 const router = new Router();
 
 router.use('/search', search.routes());
+router.use('/movie-list', movieList.routes());
 
 app
   .use(
@@ -21,6 +24,8 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(3001, () => {
-  console.log('listening on port 3001');
+createConnection().then(() => {
+  app.listen(3001, () => {
+    console.log('listening on port 3001');
+  });
 });
