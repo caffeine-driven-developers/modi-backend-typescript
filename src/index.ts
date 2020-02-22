@@ -2,6 +2,7 @@ import Koa from 'koa';
 import Router from 'koa-router';
 import dotenv from 'dotenv';
 import cors from '@koa/cors';
+import bodyParser from 'koa-bodyparser';
 
 import search from './search';
 import movieList from './movie_list';
@@ -21,6 +22,7 @@ app
       origin: '*',
     }),
   )
+  .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods());
 
