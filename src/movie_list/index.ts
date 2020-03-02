@@ -57,7 +57,6 @@ movieListRouter.get('/:q?', async (ctx, next) => {
 });
 
 movieListRouter.post('/', async (ctx, next) => {
-  console.log('ctx', ctx.request.body);
   const { title, movieIdList } = ctx.request.body;
 
   let err;
@@ -76,9 +75,61 @@ movieListRouter.post('/', async (ctx, next) => {
   }
 
   if (err) {
-    ctx.response.status = 400;
-    ctx.body = JSON.stringify(err);
-    return;
+    ctx.throw(400, JSON.stringify(err));
+  }
+  ctx.body = 'success';
+});
+
+movieListRouter.patch('/', async ctx => {
+  const { movieListId, title, movieIdList } = ctx.request.body;
+  let err;
+
+  try {
+    const conn = getConnection();
+    const movieListRepo = conn.getRepository(MovieList);
+    const result = await movieListRepo.findOne({
+      movie_list_id: movieListId,
+    });
+
+    if (__.isNil(result)) {
+      ctx.throw(404, 'No such movie list');
+    }
+
+    if (__.isString(title)) {
+      result!.title = title;
+    }
+    if (__.isArray(movieIdList) && __.isString(movieIdList[0])) {
+      result!.movie_id_list = movieIdList; // TODO: movie_id_list string으로 바꾸기
+    }
+    await movieListRepo.save(result!);
+  } catch (error) {
+    err = error;
+  }
+
+  if (err) {
+    ctx.throw(400, JSON.stringify(err));
+  }
+  ctx.body = 'success';
+});
+
+movieListRouter.delete('/:q', async ctx => {
+  const { q } = ctx.params;
+  let err;
+
+  try {
+    const conn = getConnection();
+    const movieListRepo = conn.getRepository(MovieList);
+    const result = await movieListRepo.findOne(Number.parseInt(q, 10));
+    if (__.isNil(result)) {
+      ctx.throw(404, 'No such movie list');
+    }
+    await movieListRepo.delete(result!);
+  } catch (error) {
+    err = error;
+  }
+
+  if (err) {
+    ctx.throw(400, JSON.stringify(err));
   }
   ctx.body = 'success';
 });
