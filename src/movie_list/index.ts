@@ -28,6 +28,9 @@ movieListRouter.get('/:q?', async (ctx, next) => {
       const conn = getConnection();
       const movieListRepo = conn.getRepository(MovieList);
       result = await movieListRepo.findOne(Number.parseInt(q, 10));
+      if (__.isNil(result)) {
+        ctx.throw(404, 'No such movie list');
+      }
     } catch (error) {
       err = error;
     }
