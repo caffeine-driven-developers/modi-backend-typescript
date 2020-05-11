@@ -5,6 +5,7 @@ import cors from '@koa/cors';
 import bodyParser from 'koa-bodyparser';
 
 import search from './search';
+import movies from './movies';
 import movieList from './movie_list';
 import { createConnection } from 'typeorm';
 
@@ -14,6 +15,7 @@ const app = new Koa();
 const router = new Router();
 
 router.use('/search', search.routes());
+router.use('/movies', movies.routes());
 router.use('/movie-list', movieList.routes());
 
 app
